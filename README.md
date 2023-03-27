@@ -1,9 +1,9 @@
 # Nginx Manager
 
-Nginx Manager is a bash script that allows you to manage your Nginx server.
+Nginx Manager is a bash script that allows you to manage your Nginx server.<br>
 Usage : `nginx_manager [enable|disable|nano|delete|ls|cat] <...files>`
 
-To install the script, just run `install.sh`.
+To install the script, just run `install.sh`.<br>
 The script also enables auto-completion for bash.
 
 ## Commands
