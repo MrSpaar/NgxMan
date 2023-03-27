@@ -1,0 +1,26 @@
+_ngxman() 
+{
+    local cur prev
+
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+    case $prev in
+        enable | delete | cat | nano)
+            COMPREPLY=($(ls /etc/nginx/sites-available))
+        ;;
+        disable)
+            COMPREPLY=($(ls /etc/nginx/sites-enabled))
+        ;;
+        ls | add)
+            COMPREPLY=()
+        ;;
+        *)
+            COMPREPLY=("enable" "disable" "nano" "delete" "ls" "cat")
+        ;;
+    esac
+
+    return 0
+}
+
+complete -F _ngxman ngxman

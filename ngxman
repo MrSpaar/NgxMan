@@ -1,0 +1,93 @@
+#!/bin/bash
+
+NC='\033[0m'
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+GRAY='\033[0;37m'
+
+if [[ $# -lt 2 && $1 != "ls" ]]; then
+  echo -e "${RED}Usage:${NC} nginx_manager [enable|disable|nano|remove|ls|cat] ${GRAY}<...files>${NC}"
+  exit 1
+fi
+
+files="${*:2}"
+
+case "$1" in
+  "enable")
+    for file in $files; do
+      if [[ ! -f /etc/nginx/sites-available/"$file" ]]; then
+        echo -e "${RED} No \"$file\" file in available sites${NC}"
+        continue
+      fi
+
+      flag=1
+      sudo ln -s /etc/nginx/sites-available/"$file" /etc/nginx/sites-enabled/"$file"
+      echo -e "${GREEN} \"$file\" file linked to enabled sites${NC}"
+    done
+
+    if [[ $flag -eq 1 ]]; then
+      sudo systemctl restart nginx
+    fi
+  ;;
+  "disable")
+    for file in $files; do
+      if [[ ! -f /etc/nginx/sites-enabled/"$file" ]]; then
+        echo -e "${RED} No \"$file\" file in enabled sites${NC}"
+        continue
+      fi
+
+      flag=1
+      sudo rm /etc/nginx/sites-enabled/"$file"
+      echo -e "${GREEN} \"$file\" file removed from enabled sites${NC}"
+    done
+
+    if [[ $flag -eq 1 ]]; then
+      sudo systemctl restart nginx
+    fi
+  ;;
+  "nano")
+    sudo nano /etc/nginx/sites-available/"$2"
+    echo -e "${GREEN} File \"$2\" created or modified${NC}"
+
+    sudo systemctl restart nginx
+  ;;
+  "delete")
+    for file in $files; do
+      if [[ ! -f /etc/nginx/sites-available/"$file" ]]; then
+        echo -e "${RED} No \"$file\" file in available sites${NC}"
+        continue
+      fi
+
+      sudo rm /etc/nginx/sites-available/"$file"
+      echo -e "${GREEN} \"$file\" file removed from available sites${NC}"
+
+      if [[ -f /etc/nginx/sites-enabled/"$file" ]]; then
+        flag=1
+        sudo rm /etc/nginx/sites-enabled/"$file"
+        echo -e "${GREEN} \"$file\" file removed from enabled sites${NC}"
+      fi
+    done
+
+    if [[ $flag -eq 1 ]]; then
+      sudo systemctl restart nginx
+    fi
+  ;;
+  "ls")
+    echo -e "${GRAY}Available sites:${NC}"
+    sudo ls /etc/nginx/sites-available
+    echo -e "${GRAY}Enabled sites:${NC}"
+    sudo ls /etc/nginx/sites-enabled
+  ;;
+  "cat")
+    if [[ ! -f /etc/nginx/sites-available/"$2" ]]; then
+      echo -e "${RED} No \"$2\" file in available sites${NC}"
+      exit 1;
+    fi
+
+    sudo cat /etc/nginx/sites-available/"$2"
+  ;;
+  *)
+    echo -e "${RED}Usage:${NC} nginx_manager [enable|disable|nano|delete|ls|cat] ${GRAY}<...files>${NC}"
+    exit 1
+  ;;
+esac
