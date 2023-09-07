@@ -1,5 +1,3 @@
-#!/bin/bash
-
 GRAY='\033[90m'
 RED='\033[91m'
 GREEN='\033[92m'
@@ -33,10 +31,10 @@ sudo cp ngxman /bin/ngxman \
     || printf "${RED}ngxman installation failed${R}\n"
 
 sudo cp ngxman_completer /etc/bash_completion.d/ngxman \
-    && printf "${BOLD}${GREEN}ngxman${R}${GREEN} bash completion installed in ${BOLD}/etc/bash_completion.d/ngxman${R}\n" \
+    && printf "${GREEN}ngxman bash completion installed in ${BOLD}/etc/bash_completion.d/ngxman${R}\n" \
     || printf "${RED}ngxman bash completion installation failed${R}\n"
 
-# Get the RC file
+
 if [ -f "~/.zshrc" ]; then
     RC_FILE="~/.zshrc"
 elif [ -f "~/.bashrc" ]; then
@@ -48,7 +46,7 @@ fi
 
 
 if grep -q "source /etc/bash_completion.d/ngxman" "$RC_FILE"; then
-    printf "${GREEN}ngxman bash completion already sourced in $RC_FILE${R}\n"
+    printf "${GREEN}ngxman bash completion already sourced in ${BOLD}$RC_FILE${R}\n"
 else
     echo "source /etc/bash_completion.d/ngxman" >> "$RC_FILE" \
         && printf "${GREEN}ngxman bash completion sourced in $RC_FILE${R}\n" \
