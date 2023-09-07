@@ -1,8 +1,10 @@
-GRAY = '\033[90m'
-RED = '\033[91m'
-GREEN = '\033[92m'
-BOLD = '\033[1m'
-R = '\033[0m'
+#!/bin/bash
+
+GRAY='\033[90m'
+RED='\033[91m'
+GREEN='\033[92m'
+BOLD='\033[1m'
+R='\033[0m'
 
 
 if ! [ -x "$(command -v nginx)" ]; then
@@ -53,6 +55,6 @@ else
         || printf "${RED}ngxman bash completion sourcing failed${END}\n"
 fi
 
-source "$RC_FILE"
+source "$RC_FILE" \
     && printf "${GREEN}Ngxman successfully installed${END}\n" \
     || printf "${RED}Ngxman installation failed${END}\n"
