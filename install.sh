@@ -37,10 +37,10 @@ sudo cp ngxman_completer /etc/bash_completion.d/ngxman \
     || printf "${RED}ngxman bash completion installation failed${R}\n"
 
 # Get the RC file
-if [ -f "$HOME/.zshrc" ]; then
-    RC_FILE="$HOME/.zshrc"
-elif [ -f "$HOME/.bashrc" ]; then
-    RC_FILE="$HOME/.bashrc"
+if [ -f "~/.zshrc" ]; then
+    RC_FILE="~/.zshrc"
+elif [ -f "~/.bashrc" ]; then
+    RC_FILE="~/.bashrc"
 else
     printf "${RED}RC file not found, you can add ${BOLD}source /etc/bash_completion.d/ngxman${R}${RED} to your RC file manually${R}\n"
     exit 1
@@ -48,13 +48,13 @@ fi
 
 
 if grep -q "source /etc/bash_completion.d/ngxman" "$RC_FILE"; then
-    printf "${GREEN}ngxman bash completion already sourced in $RC_FILE${END}\n"
+    printf "${GREEN}ngxman bash completion already sourced in $RC_FILE${R}\n"
 else
     echo "source /etc/bash_completion.d/ngxman" >> "$RC_FILE" \
-        && printf "${GREEN}ngxman bash completion sourced in $RC_FILE${END}\n" \
-        || printf "${RED}ngxman bash completion sourcing failed${END}\n"
+        && printf "${GREEN}ngxman bash completion sourced in $RC_FILE${R}\n" \
+        || printf "${RED}ngxman bash completion sourcing failed${R}\n"
 fi
 
 source "$RC_FILE" \
-    && printf "${GREEN}Ngxman successfully installed${END}\n" \
-    || printf "${RED}Ngxman installation failed${END}\n"
+    && printf "${GREEN}Ngxman successfully installed${R}\n" \
+    || printf "${RED}Ngxman installation failed${R}\n"
