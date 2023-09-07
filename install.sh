@@ -39,7 +39,7 @@ sudo cp ngxman_completer /etc/bash_completion.d/ngxman \
 # Get the RC file
 if [ -f "$HOME/.zshrc" ]; then
     RC_FILE="$HOME/.zshrc"
-if [ -f "$HOME/.bashrc" ]; then
+elif [ -f "$HOME/.bashrc" ]; then
     RC_FILE="$HOME/.bashrc"
 else
     printf "${RED}RC file not found, you can add ${BOLD}source /etc/bash_completion.d/ngxman${R}${RED} to your RC file manually${R}\n"
