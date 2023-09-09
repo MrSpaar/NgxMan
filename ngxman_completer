@@ -1,5 +1,10 @@
 _ngxman() 
 {
+    if [ "$COMP_CWORD" -gt 2 ]; then
+        COMPREPLY=()
+        return 0
+    fi
+
     local cur prev
 
     cur="${COMP_WORDS[COMP_CWORD]}"
