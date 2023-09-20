@@ -12,10 +12,10 @@ _ngxman()
 
     case $prev in
         enable | delete | cat | nano)
-            COMPREPLY=("/etc/nginx/sites-available/$cur"*)
+            COMPREPLY=($(ls /etc/nginx/sites-available))
         ;;
         disable)
-            COMPREPLY=("/etc/nginx/sites-enabled/$cur"*)
+            COMPREPLY=($(ls /etc/nginx/sites-enabled))
         ;;
         ls | add)
             COMPREPLY=()
